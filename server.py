@@ -3,16 +3,17 @@ import threading
 
 server = socket.socket(
     socket.AF_INET,
-    socket.SOCK_STREAM # TCP/IP
+    socket.SOCK_STREAM  # TCP/IP
 )
 
 server.bind(
-    ("127.0.0.1", 1234) # localhost
+    ("127.0.0.1", 1234)  # localhost
 )
 
-server.listen(10) # 10 active connections
+server.listen(10)  # 10 active connections
 users = []
 print("Server is listening")
+
 
 def listen_user(user):
     while True:
@@ -20,14 +21,16 @@ def listen_user(user):
         print(f"User sent {data}")
         send_all(data)
 
+
 def send_all(data):
     for user in users:
         user.send(data)
 
+
 def start_server():
     while True:
         user_socket, address = server.accept()
-        print(f"User <{address[0]}> connected") # get client's IP address
+        print(f"User <{address[0]}> connected")  # get client's IP address
         users.append(user_socket)
         listen_accepted_user = threading.Thread(
             target=listen_user,
@@ -35,8 +38,6 @@ def start_server():
         )
 
         listen_accepted_user.start()
-        listen_accepted_user.join()
-
 
 
 if __name__ == '__main__':
