@@ -1,5 +1,5 @@
 import socket
-from threading import Thread
+import threading
 
 server = socket.socket(
     socket.AF_INET,
@@ -14,19 +14,6 @@ server.listen(10) # 10 active connections
 users = []
 print("Server is listening")
 
-def start_server():
-    while True:
-        user_socket, address = server.accept()
-        print(f"User <{address[0]}> connected") # get client's IP address
-        users.append(user_socket)
-        listen_accepted_user = Thread(
-            target=listen_user,
-            args=(user_socket,)
-        )
-
-        listen_accepted_user.start()
-        listen_accepted_user.join()
-
 def listen_user(user):
     while True:
         data = user.recv(2048)
@@ -37,6 +24,18 @@ def send_all(data):
     for user in users:
         user.send(data)
 
+def start_server():
+    while True:
+        user_socket, address = server.accept()
+        print(f"User <{address[0]}> connected") # get client's IP address
+        users.append(user_socket)
+        listen_accepted_user = threading.Thread(
+            target=listen_user,
+            args=(user_socket,)
+        )
+
+        listen_accepted_user.start()
+        listen_accepted_user.join()
 
 
 

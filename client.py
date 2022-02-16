@@ -1,5 +1,5 @@
 import socket
-from threading import Thread
+import threading
 
 client = socket.socket(
     socket.AF_INET,
@@ -10,14 +10,14 @@ client.connect(
     ("127.0.0.1", 1234)  # localhost
 )
 
-def listen_server(user_socket):
+def listen_server():
     while True:
         data = client.recv(2048)
         print(data.decode("utf-8"))
 
 
 def send_all():
-    listen_thread = Thread(target=listen_server)
+    listen_thread = threading.Thread(target=listen_server)
     listen_thread.start()
 
     while True:
