@@ -8,6 +8,8 @@ client = socket.socket(
     socket.SOCK_STREAM  #TCP/IP
 )
 
+nickname = input("Enter your name:")
+
 def setup_connection():
     try:
         client.connect(
@@ -25,7 +27,7 @@ def listen_server():
     while True:
         try:
             data = client.recv(2048)
-            messages += f"{datetime.now().date()}" + ": " + data.decode('utf-8') + "\n"
+            messages += f"{datetime.now().date()}" + data.decode('utf-8') + "\n"
             system("cls") # "cls" helps us to avoid duplicate lines
             print(messages)
 
@@ -41,7 +43,7 @@ def send_all():
     listen_thread.start()
 
     while True:
-        client.send(input("").encode("utf-8"))
+        client.send(f"[{nickname}]: ".encode("utf-8") + input("").encode("utf-8"))
 
 if __name__ == '__main__':
     setup_connection()
