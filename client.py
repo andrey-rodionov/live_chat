@@ -28,7 +28,7 @@ def listen_server():
         try:
             data = client.recv(2048)
             messages += f"{datetime.now().date()}" + data.decode('utf-8') + "\n"
-            system("cls") # "cls" helps us to avoid duplicate lines
+            system("cls") # "cls" helps us avoid duplicate lines
             print(messages)
 
         # put an exception to inform users about server's disconnect

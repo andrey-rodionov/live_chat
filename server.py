@@ -18,7 +18,7 @@ def listen_user(user):
     while True:
         try:
             message = user.recv(2048)
-            print(f"User sent {message}")
+            print("Got message from " + f"{message}")
             send_all(message)
 
         # put an exception to show that someone left chatroom
