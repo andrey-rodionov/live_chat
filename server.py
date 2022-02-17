@@ -35,7 +35,7 @@ def start_server():
     while True:
         user_socket, address = server.accept()
         print(f"User <{address[0]}> connected")  # get client's IP address
-        user_socket.send("CONNECTED \n"
+        user_socket.send(" CONNECTED \n"
                          "===========================================================\n"
                          "= Welcome to the smallest anonymous chat around Internet! =\n"
                          "===========================================================\n".encode("utf-8"))
